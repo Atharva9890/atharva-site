@@ -214,29 +214,35 @@ input,textarea{ font:inherit; color:inherit }
 .hero-status .right{ display:inline-flex; align-items:center; gap:.5rem }
 
 /* ---------- about ---------- */
-#about{ background:#fff }
-.about-grid{ display:grid; grid-template-columns:1fr; align-items:center; gap:3rem; padding-block:5rem }
+#about{ position:relative; isolation:isolate; overflow:hidden; background:#0a0a0a; border-radius:2rem; color:#fff }
+.about-video-bg{ position:absolute; inset:0; z-index:0 }
+.about-video-bg video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover }
+.about-video-overlay{ position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg, rgba(10,10,10,.55) 0%, rgba(10,10,10,.75) 55%, rgba(10,10,10,.92) 100%) }
+.about-grid{ position:relative; z-index:2; display:grid; grid-template-columns:1fr; align-items:center; gap:3rem; padding-block:5rem }
 @media (min-width:1024px){ .about-grid{ grid-template-columns:1fr 1fr; padding-block:7rem } }
 .about-globe-block{ position:relative; min-height:14rem }
 @media (min-width:640px){ .about-globe-block{ min-height:16rem } }
 @media (min-width:1024px){ .about-globe-block{ min-height:20rem } }
-.about-globe-icon{ position:absolute; left:-1rem; top:50%; transform:translateY(-50%); font-size:12rem; color:rgba(17,17,17,.1); pointer-events:none }
+.about-globe-icon{ position:absolute; left:-1rem; top:50%; transform:translateY(-50%); font-size:12rem; color:rgba(255,255,255,.12); pointer-events:none }
 @media (min-width:640px){ .about-globe-icon{ font-size:16rem } }
 @media (min-width:1024px){ .about-globe-icon{ left:-1.5rem; font-size:20rem } }
-.about-globe-caption{ position:absolute; left:0; bottom:0; display:flex; align-items:center; gap:.75rem; font-size:.875rem; color:rgba(17,17,17,.7) }
-.about-globe-caption .icon{ font-size:1.5rem; color:#111; flex-shrink:0 }
+.about-globe-caption{ position:absolute; left:0; bottom:0; display:flex; align-items:center; gap:.75rem; font-size:.875rem; color:rgba(255,255,255,.75) }
+.about-globe-caption .icon{ font-size:1.5rem; color:#fff; flex-shrink:0 }
 .about-globe-caption span{ max-width:14rem }
 .about-statement{ display:flex; flex-direction:column; gap:2.5rem }
-.about-h2{ font-size:1.5rem; font-weight:500; line-height:1.35; letter-spacing:-.01em }
+.about-h2{ font-size:1.5rem; font-weight:500; line-height:1.35; letter-spacing:-.01em; color:#fff }
 @media (min-width:640px){ .about-h2{ font-size:1.875rem } }
-.about-h2 .muted{ color:var(--muted) }
-.about-footer-row{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1.5rem; border-top:1px solid var(--line); padding-top:1.5rem }
-.about-social-label{ font-size:.875rem; color:rgba(17,17,17,.45); margin-bottom:.5rem }
+.about-h2 .muted{ color:rgba(255,255,255,.5) }
+.about-footer-row{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1.5rem; border-top:1px solid rgba(255,255,255,.15); padding-top:1.5rem }
+.about-social-label{ font-size:.875rem; color:rgba(255,255,255,.5); margin-bottom:.5rem }
 .social-row{ display:flex; gap:.5rem }
 .social-chip{ width:2.25rem; height:2.25rem; display:grid; place-items:center; border-radius:9999px; font-size:.875rem; transition:transform .35s cubic-bezier(.2,.8,.2,1) }
 @media (hover:hover){ .social-chip:hover{ transform:scale(1.18) } }
 .social-chip.accent{ background:var(--accent); color:#fff }
 .social-chip.plain{ background:var(--surface); color:rgba(17,17,17,.7) }
+#about .social-chip.plain{ background:rgba(255,255,255,.12); color:rgba(255,255,255,.85) }
+#about .pill-btn.outline{ border-color:rgba(255,255,255,.3); color:#fff }
+#about .pill-btn.outline .pill-badge{ background:#fff; color:#0a0a0a }
 
 /* ---------- create band ---------- */
 #createband{ background:#fff }
@@ -525,10 +531,16 @@ input,textarea{ font:inherit; color:inherit }
 </section>
 
 <section id="about">
+  <div class="about-video-bg">
+    <video id="about-video" autoplay muted loop playsinline preload="metadata" poster="assets/about-bg-poster.jpg" aria-hidden="true">
+      <source src="assets/about-bg.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="about-video-overlay"></div>
   <div class="shell about-grid">
     <div class="about-globe-block">
       <svg class="icon about-globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><path d="M12 2.75c2.6 2.3 4 5.8 4 9.25s-1.4 6.95-4 9.25c-2.6-2.3-4-5.8-4-9.25s1.4-6.95 4-9.25zM2.75 12h18.5"/></svg>
-      <p class="eyebrow" style="position:relative">About Me</p>
+      <p class="eyebrow light" style="position:relative">About Me</p>
       <div class="about-globe-caption reveal-up-sm">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><path d="M12 2.75c2.6 2.3 4 5.8 4 9.25s-1.4 6.95-4 9.25c-2.6-2.3-4-5.8-4-9.25s1.4-6.95 4-9.25zM2.75 12h18.5"/></svg>
         <span>One engineer, five systems, built from the ground up.</span>
@@ -1311,7 +1323,26 @@ initHeroCard();
 setupLiquidReveal();
 initAboutWords();
 initStatsCountUp();
+setupAboutVideo();
 runLoader();
+
+/* ---- About background video: pause when off-screen, skip entirely under reduced motion ---- */
+function setupAboutVideo(){
+  const video = document.getElementById('about-video');
+  if (!video) return;
+  if (prefersReducedMotion) {
+    video.removeAttribute('autoplay');
+    video.pause();
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    });
+  }, { threshold: 0.1 });
+  io.observe(video);
+}
 </script>
 </body>
 </html>
