@@ -6,6 +6,8 @@ scroll). Everything else — the intro loader, the cursor-driven liquid
 image reveal in the hero, the spring-feel entrance animations, the
 scroll-triggered stat count-up — is hand-rolled vanilla JS.
 
+Live at [atharvakalange.com](https://atharvakalange.com).
+
 ## Running it locally
 
 No build step. Just serve the directory:
@@ -16,24 +18,17 @@ python3 -m http.server 4173
 
 Then open `http://localhost:4173`.
 
-## Before this goes fully live
+## Deployment
 
-1. **Wire up the contact form.** `FORMSPREE_ENDPOINT` near the bottom of
-   the `<script type="module">` block is currently a placeholder
-   (`https://formspree.io/f/YOUR_FORM_ID`). To make it real:
-   - Go to [formspree.io](https://formspree.io), sign up free, create a
-     new form.
-   - Copy the endpoint it gives you (`https://formspree.io/f/xxxxxxxx`).
-   - Replace `FORMSPREE_ENDPOINT` in `index.html` with that URL.
-   - Submissions will then land in your Formspree inbox / forward to your
-     email, no backend needed.
-2. **Fill in the real stats.** The `STATS` array (same script block) has
-   one real number (`5` open-source systems shipped) and three
-   placeholders marked `value: null, display: 'XX'`. Swap each `null` for
-   a real number once you know it, and delete the `— edit me` suffix from
-   the label.
-3. **Double check the social links** (GitHub is correct; LinkedIn and X
-   are placeholder URLs — update them to your actual profiles).
+GitHub Pages, deployed from `main` (root). Custom domain and DNS run
+through Cloudflare, which also serves the Web Analytics beacon.
+
+**Repo must stay public** — GitHub Pages on the free tier only builds
+from public repos. Flipping this private silently disables Pages until
+it's flipped back and the source is re-selected under Settings → Pages.
+
+The contact form posts to Formspree (`FORMSPREE_ENDPOINT` near the
+bottom of the `<script type="module">` block).
 
 ## Structure
 
